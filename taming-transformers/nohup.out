@@ -1,0 +1,16 @@
+[I 18:55:28.104 NotebookApp] The port 8889 is already in use, trying another port.
+[I 18:55:28.104 NotebookApp] Serving notebooks from local directory: /mnt/store/cv/artem/GAN/taming-transformers
+[I 18:55:28.104 NotebookApp] Jupyter Notebook 6.4.7 is running at:
+[I 18:55:28.105 NotebookApp] http://localhost:8890/?token=64d7f398d6da57cd368eb1b6b6c94d5571c14a9770178189
+[I 18:55:28.105 NotebookApp]  or http://127.0.0.1:8890/?token=64d7f398d6da57cd368eb1b6b6c94d5571c14a9770178189
+[I 18:55:28.105 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 18:55:28.107 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/blanar/.local/share/jupyter/runtime/nbserver-1869360-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8890/?token=64d7f398d6da57cd368eb1b6b6c94d5571c14a9770178189
+     or http://127.0.0.1:8890/?token=64d7f398d6da57cd368eb1b6b6c94d5571c14a9770178189
+[C 18:55:56.707 NotebookApp] received signal 15, stopping
+[I 18:55:56.709 NotebookApp] Shutting down 0 kernels
+[I 18:55:56.709 NotebookApp] Shutting down 0 terminals

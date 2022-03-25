@@ -1,0 +1,12 @@
+flask
+torch
+omegaconf
+IPython
+Pillow
+requests
+torch 
+pytorch-lightning
+torchvision
+einops
+ftfy
+regex
