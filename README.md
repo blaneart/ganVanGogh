@@ -13,6 +13,8 @@ python app.py
 Will run web app on localhost:5000
 ![alt text](https://github.com/blaneart/ganVanGogh/blob/main/samples/webpage.png?raw=true)
 
+## References 
+[Taming Transformers for High-Resolution Image Synthesis](https://github.com/CompVis/taming-transformers)
 ## Citations
 ```
 @misc{unpublished2021clip,
