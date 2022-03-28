@@ -1,10 +1,10 @@
-from flask import Flask,request, url_for, redirect, render_template, jsonify
+from flask import Flask,request, url_for, redirect, render_template, jsonify, send_file
 import argparse
 import io
 import math
 from pathlib import Path
 import sys
-
+from flask_cors import CORS, cross_origin
 sys.path.append('./taming-transformers')
 
 from IPython import display
@@ -198,7 +198,7 @@ args = argparse.Namespace(
     init_weight=0.,
     clip_model='ViT-B/32',
     vqgan_config='taming-transformers/logs/2022-01-24T04-09-31_custom_vqgan/configs/2022-01-24T04-09-31-project.yaml',
-    vqgan_checkpoint='taming-transformers/logs/2022-01-24T04-09-31_custom_vqgan/checkpoints/last.ckpt',
+    vqgan_checkpoint='taming-transformers/last.ckpt',
     step_size=0.05,
     cutn=64,
     cut_pow=1.,
@@ -261,11 +261,11 @@ def synth(z):
     return clamp_with_grad(model.decode(z_q).add(1).div(2), 0, 1)
 
 @torch.no_grad()
-def checkin(i, losses):
+def checkin(i, losses, name):
     losses_str = ', '.join(f'{loss.item():g}' for loss in losses)
     tqdm.write(f'i: {i}, loss: {sum(losses).item():g}, losses: {losses_str}')
     out = synth(z)
-    TF.to_pil_image(out[0].cpu()).save('static/progress.png')
+    TF.to_pil_image(out[0].cpu()).save('./static/'+name+'.png')
     # display.display(display.Image('progress.png'))
 
 def ascend_txt():
@@ -282,11 +282,11 @@ def ascend_txt():
 
     return result
 
-def train(i):
+def train(i, name='progress'):
     opt.zero_grad()
     lossAll = ascend_txt()
     if i % args.display_freq == 0:
-        checkin(i, lossAll)
+        checkin(i, lossAll, name)
     loss = sum(lossAll)
     loss.backward()
     opt.step()
@@ -295,6 +295,7 @@ def train(i):
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/predict": {"origins": "*"}})
 
 
 @app.route('/')
@@ -303,9 +304,10 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    str_features = [x for x in request.form.values()]
+    str_features =[x for x in request.form.values()]
+    print(str_features[0])
     prompt_gen(str_features[0])
-    prediction=10
+
     i = 0
     try:
         with tqdm() as pbar:
@@ -314,8 +316,9 @@ def predict():
                 i += 1
                 pbar.update()
     except KeyboardInterrupt:
-        pass  
-    return render_template('home.html',pred='Expected Bill will be {}'.format(prediction))
+        pass
+    filename=str_features[0] + '.png'
+    return render_template("home.html")
 
 
 if __name__ == '__main__':
